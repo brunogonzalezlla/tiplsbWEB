@@ -1,0 +1,39 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title>Django Tailwind</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		{% tailwind_css %}
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+        <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+        <style>
+          .gradient {
+              background: rgb(255,134,132);
+              background: linear-gradient(180deg, rgba(255,134,132,1) 0%, rgba(232,234,172,1) 60%);
+          }
+          .gradient-windows {
+              background: rgb(250,222,210);
+              background: linear-gradient(180deg, rgba(250,222,210,1) 0%, rgba(237,234,215,1) 100%);
+          }
+        </style>
+	</head>
+
+	<body style="font-family: 'Source Sans Pro', sans-serif;">
+        <div class="flex flex-wrap h-screen overflow-hidden">
+            <div class="w-full sm:w-1/2">
+
+            </div>
+            <div class="gradient w-full sm:w-1/2 relative">
+                <div class="flex h-screen">
+                    <div class="my-auto h-1/2 w-1/2 rounded-2xl gradient-windows relative right-32 shadow-lg">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

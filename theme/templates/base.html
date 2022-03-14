@@ -1,0 +1,534 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <title>TIPLSB - Web APP</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		{% tailwind_css %}
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+        <style>
+          .gradient {
+            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+          }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	</head>
+
+	<body style="font-family: 'Source Sans Pro', sans-serif;">
+        <div class="absolute p-5" style="z-index: 1000;">
+            <button onclick="location.reload();" class="p-0 w-16 h-16 bg-red-600 rounded-full bg-gradient-to-r from-blue-500 to-teal-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-white inline-block w-6 h-6" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                </svg>
+            </button>
+        </div>
+        <section class="relative h-screen overflow-x-hidden">
+            <div class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none" aria-hidden="true">
+                <svg width="1360" height="578" viewBox="0 0 1360 578" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="illustration-01">
+                            <stop stop-color="#FFF" offset="0%"></stop>
+                            <stop stop-color="#EAEAEA" offset="77.402%"></stop>
+                            <stop stop-color="#DFDFDF" offset="100%"></stop>
+                        </linearGradient>
+                    </defs>
+                    <g fill="url(#illustration-01)" fill-rule="evenodd">
+                        <circle cx="1232" cy="128" r="128"></circle>
+                        <circle cx="155" cy="443" r="64"></circle>
+                    </g>
+                </svg>
+            </div>
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="pt-16 sm:pt-24 pb-12 md:pb-20">
+                    <div class="text-center pb-12 md:pb-16">
+                        <h1 class="text-7xl md:text-8xl font-extrabold leading-tighter tracking-tighter mb-4 aos-init aos-animate" data-aos="zoom-y-out">
+                            Firma tus imágenes con <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">TIPLSB</span>
+                        </h1>
+                        <div class="max-w-3xl mx-auto">
+                            <div id="file_initialized" class="hidden bg-white rounded-2xl border border-slate-200 shadow-xl p-10 w-full">
+                                <div class="flex flex-col items-center space-y-4">
+                                    <img id="actual_image_init" class="w-80 mx-auto rounded-2xl" src="">
+                                    <h1 class="font-bold text-xl text-gray-600 text-center">Imagen actual</h1>
+                                    <p class="text-md text-gray-500 text-center">
+                                        La imagen ya se encuentra inicializada
+                                    </p>
+                                    <div id="init_information" class="w-full bg-white rounded-xl relative z-10 overflow-hidden border border-primary border-opacity-20 py-10">
+                                        <span class="text-primary font-semibold text-3xl block mb-10 mt-5">Información</span>
+                                        <table class="w-full">
+                                            <tr>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Versión</h1>
+                                                </th>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Línea</h1>
+                                                </th>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Redundancia</h1>
+                                                </th>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Función Hash</h1>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span id="file_initialized_version" class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">0.0.1</span>
+                                                </td>
+                                                <td>
+                                                    <span id="file_initialized_line" class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">23</span>
+                                                </td>
+                                                <td>
+                                                    <span id="file_initialized_redundancy" class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">5</span>
+                                                </td>
+                                                <td>
+                                                    <span id="file_initialized_hash" class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">RSA</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div>
+                                            <span class="absolute right-0 top-7 z-[-1]">
+                                                <svg width="77" height="172" viewBox="0 0 77 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="86" cy="86" r="86" fill="url(#paint0_linear)" />
+                                                    <defs>
+                                                        <linearGradient id="paint0_linear" x1="86" y1="0" x2="86" y2="172" gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#3056D3" stop-opacity="0.09" />
+                                                            <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                </svg>
+                                            </span>
+                                            <span class="absolute right-4 top-4 z-[-1]">
+                                                <svg width="41" height="89" viewBox="0 0 41 89" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="38.9138" cy="87.4849" r="1.42021" transform="rotate(180 38.9138 87.4849)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="74.9871" r="1.42021" transform="rotate(180 38.9138 74.9871)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="62.4892" r="1.42021" transform="rotate(180 38.9138 62.4892)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="38.3457" r="1.42021" transform="rotate(180 38.9138 38.3457)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="13.634" r="1.42021" transform="rotate(180 38.9138 13.634)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="50.2754" r="1.42021" transform="rotate(180 38.9138 50.2754)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="26.1319" r="1.42021" transform="rotate(180 38.9138 26.1319)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="1.42021" r="1.42021" transform="rotate(180 38.9138 1.42021)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="87.4849" r="1.42021" transform="rotate(180 26.4157 87.4849)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="74.9871" r="1.42021" transform="rotate(180 26.4157 74.9871)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="62.4892" r="1.42021" transform="rotate(180 26.4157 62.4892)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="38.3457" r="1.42021" transform="rotate(180 26.4157 38.3457)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="13.634" r="1.42021" transform="rotate(180 26.4157 13.634)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="50.2754" r="1.42021" transform="rotate(180 26.4157 50.2754)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="26.1319" r="1.42021" transform="rotate(180 26.4157 26.1319)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="1.4202" r="1.42021" transform="rotate(180 26.4157 1.4202)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="87.4849" r="1.42021" transform="rotate(180 13.9177 87.4849)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="74.9871" r="1.42021" transform="rotate(180 13.9177 74.9871)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="62.4892" r="1.42021" transform="rotate(180 13.9177 62.4892)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="38.3457" r="1.42021" transform="rotate(180 13.9177 38.3457)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="13.634" r="1.42021" transform="rotate(180 13.9177 13.634)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="50.2754" r="1.42021" transform="rotate(180 13.9177 50.2754)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="26.1319" r="1.42021" transform="rotate(180 13.9177 26.1319)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="1.42019" r="1.42021" transform="rotate(180 13.9177 1.42019)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="87.4849" r="1.42021" transform="rotate(180 1.41963 87.4849)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="74.9871" r="1.42021" transform="rotate(180 1.41963 74.9871)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="62.4892" r="1.42021" transform="rotate(180 1.41963 62.4892)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="38.3457" r="1.42021" transform="rotate(180 1.41963 38.3457)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="13.634" r="1.42021" transform="rotate(180 1.41963 13.634)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="50.2754" r="1.42021" transform="rotate(180 1.41963 50.2754)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="26.1319" r="1.42021" transform="rotate(180 1.41963 26.1319)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="1.4202" r="1.42021" transform="rotate(180 1.41963 1.4202)" fill="#3056D3" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="btn_select_init" class="flex w-full">
+                                        <button id="sign_button" class="ring-offset-2 focus:ring-4 mx-5 bg-blue-500 text-white text-lg rounded-full font-semibold px-4 py-3 w-full mt-10">Firmar</button>
+                                        <button id="get_path_button" class="ring-offset-2 focus:ring-4 mx-5 bg-blue-500 text-white text-lg rounded-full font-semibold px-4 py-3 w-full mt-10">Obtener recorrido</button>
+                                    </div>
+                                </div>
+                                <div id="form_sign_init" class="hidden flex flex-col items-center">
+                                    <div class="grid grid-cols-2 gap-x-8 gap-y-5 w-full pt-7">
+                                        <div>
+                                            <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Nombre</label>
+                                            <div class="relative mt-1">
+                                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                    </svg>
+                                                </div>
+                                                <input id="name_init" name="name" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="John Doe">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Plataforma</label>
+                                            <div class="relative mt-1">
+                                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                        <path d="M4.5 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM6 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                                                        <path d="M12 1a2 2 0 0 1 2 2 2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10ZM2 12V5a2 2 0 0 1 2-2h9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Zm1-4v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H3Zm12-1V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2h12Z"/>
+                                                    </svg>
+                                                </div>
+                                                <input id="platform_init" name="platform" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="TIPLSBapp" value="TIPLSBapp">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="send_sign_button" type="submit" class="mt-10 bg-blue-500 ring-offset-2 focus:ring-4 text-white text-lg rounded-full font-semibold px-10 py-3">Firmar</button>
+                                </div>
+                                <div id="div_get_path" class="hidden flex flex-col items-center">
+                                    <div class="gap-x-8 gap-y-5 w-full pt-7">
+                                        <div id="form_original_file">
+                                            <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Archivo Original</label>
+                                            <div class="relative mt-1">
+                                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                        <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                                        <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5V14zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4z"/>
+                                                    </svg>
+                                                </div>
+                                                <input id="original_file" name="original_file" type="file" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="table_path" class="hidden w-full bg-white rounded-xl relative z-10 overflow-hidden border border-primary border-opacity-20 py-10">
+                                        <span class="text-primary font-semibold text-3xl block mb-10 mt-5">Recorrido</span>
+                                        <table id="body_path" class="w-full">
+                                            <tr>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">#</h1>
+                                                </th>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Nombre</h1>
+                                                </th>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Plataforma</h1>
+                                                </th>
+                                                <th class="w-1/4">
+                                                    <h1 class="font-bold text-xl text-gray-600 text-center">Fecha</h1>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                        <div>
+                                            <span class="absolute right-0 top-7 z-[-1]">
+                                                <svg width="77" height="172" viewBox="0 0 77 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="86" cy="86" r="86" fill="url(#paint0_linear)" />
+                                                    <defs>
+                                                        <linearGradient id="paint0_linear" x1="86" y1="0" x2="86" y2="172" gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#3056D3" stop-opacity="0.09" />
+                                                            <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                </svg>
+                                            </span>
+                                            <span class="absolute right-4 top-4 z-[-1]">
+                                                <svg width="41" height="89" viewBox="0 0 41 89" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="38.9138" cy="87.4849" r="1.42021" transform="rotate(180 38.9138 87.4849)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="74.9871" r="1.42021" transform="rotate(180 38.9138 74.9871)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="62.4892" r="1.42021" transform="rotate(180 38.9138 62.4892)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="38.3457" r="1.42021" transform="rotate(180 38.9138 38.3457)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="13.634" r="1.42021" transform="rotate(180 38.9138 13.634)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="50.2754" r="1.42021" transform="rotate(180 38.9138 50.2754)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="26.1319" r="1.42021" transform="rotate(180 38.9138 26.1319)" fill="#3056D3" />
+                                                    <circle cx="38.9138" cy="1.42021" r="1.42021" transform="rotate(180 38.9138 1.42021)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="87.4849" r="1.42021" transform="rotate(180 26.4157 87.4849)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="74.9871" r="1.42021" transform="rotate(180 26.4157 74.9871)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="62.4892" r="1.42021" transform="rotate(180 26.4157 62.4892)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="38.3457" r="1.42021" transform="rotate(180 26.4157 38.3457)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="13.634" r="1.42021" transform="rotate(180 26.4157 13.634)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="50.2754" r="1.42021" transform="rotate(180 26.4157 50.2754)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="26.1319" r="1.42021" transform="rotate(180 26.4157 26.1319)" fill="#3056D3" />
+                                                    <circle cx="26.4157" cy="1.4202" r="1.42021" transform="rotate(180 26.4157 1.4202)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="87.4849" r="1.42021" transform="rotate(180 13.9177 87.4849)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="74.9871" r="1.42021" transform="rotate(180 13.9177 74.9871)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="62.4892" r="1.42021" transform="rotate(180 13.9177 62.4892)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="38.3457" r="1.42021" transform="rotate(180 13.9177 38.3457)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="13.634" r="1.42021" transform="rotate(180 13.9177 13.634)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="50.2754" r="1.42021" transform="rotate(180 13.9177 50.2754)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="26.1319" r="1.42021" transform="rotate(180 13.9177 26.1319)" fill="#3056D3" />
+                                                    <circle cx="13.9177" cy="1.42019" r="1.42021" transform="rotate(180 13.9177 1.42019)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="87.4849" r="1.42021" transform="rotate(180 1.41963 87.4849)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="74.9871" r="1.42021" transform="rotate(180 1.41963 74.9871)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="62.4892" r="1.42021" transform="rotate(180 1.41963 62.4892)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="38.3457" r="1.42021" transform="rotate(180 1.41963 38.3457)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="13.634" r="1.42021" transform="rotate(180 1.41963 13.634)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="50.2754" r="1.42021" transform="rotate(180 1.41963 50.2754)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="26.1319" r="1.42021" transform="rotate(180 1.41963 26.1319)" fill="#3056D3" />
+                                                    <circle cx="1.41963" cy="1.4202" r="1.42021" transform="rotate(180 1.41963 1.4202)" fill="#3056D3" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button id="send_get_path_button" type="submit" class="mt-10 bg-blue-500 ring-offset-2 focus:ring-4 text-white text-lg rounded-full font-semibold px-10 py-3">Obtener</button>
+                                </div>
+                            </div>
+                            <div id="file_not_initialized" class="hidden bg-white rounded-2xl border border-slate-200 shadow-xl p-10 w-full">
+                                <form id="init-add-form" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="flex flex-col items-center space-y-4">
+                                        <img id="actual_image_not_init" class="w-80 mx-auto rounded-2xl" src="">
+                                        <h1 class="font-bold text-xl text-gray-600 text-center">Imagen actual</h1>
+                                        <span class="text-primary font-semibold text-3xl block mb-10 mt-5 pt-5">Inicializar y firmar imagen</span>
+                                        <div class="grid grid-cols-2 gap-x-8 gap-y-5 w-full pt-7">
+                                            <div>
+                                                <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Rudundancia</label>
+                                                <div class="relative mt-1">
+                                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                            <path d="M2 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM0 2a2 2 0 0 1 3.937-.5h8.126A2 2 0 1 1 14.5 3.937v8.126a2 2 0 1 1-2.437 2.437H3.937A2 2 0 1 1 1.5 12.063V3.937A2 2 0 0 1 0 2zm2.5 1.937v8.126c.703.18 1.256.734 1.437 1.437h8.126a2.004 2.004 0 0 1 1.437-1.437V3.937A2.004 2.004 0 0 1 12.063 2.5H3.937A2.004 2.004 0 0 1 2.5 3.937zM14 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM2 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <input id="redundancy" name="redundancy" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="5" required>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Función HASH</label>
+                                                <div class="relative mt-1">
+                                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <select id="hash" name="hash" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="TIPLSBapp" value="TIPLSBapp">
+                                                        <option value="sha1">SHA-1</option>
+                                                        <option value="sha224">SHA-224</option>
+                                                        <option value="sha256" selected>SHA-256</option>
+                                                        <option value="sha384">SHA-384</option>
+                                                        <option value="sha512">SHA-512</option>
+                                                        <option value="md5">MD5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Nombre</label>
+                                                <div class="relative mt-1">
+                                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <input id="name" name="name" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="John Doe">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block mb-2 font-semibold text-md text-gray-600 text-left">Plataforma</label>
+                                                <div class="relative mt-1">
+                                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 text-gray-500" viewBox="0 0 16 16">
+                                                            <path d="M4.5 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM6 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                                                            <path d="M12 1a2 2 0 0 1 2 2 2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10ZM2 12V5a2 2 0 0 1 2-2h9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Zm1-4v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H3Zm12-1V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2h12Z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <input id="platform" name="platform" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="TIPLSBapp" value="TIPLSBapp">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="bg-blue-500 ring-offset-2 focus:ring-4 text-white text-lg rounded-full font-semibold px-10 py-3 mt-10">Inicializar</button>
+                                </form>
+                            </div>
+
+                            <div id="input_file" class="flex items-center justify-center w-full mt-16">
+                                <div class="w-full">
+                                    <form id="form-image" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="file" id="image_input" name="image" class="absolute block opacity-0">
+                                    </form>
+                                    <div class="flex flex-col rounded-lg border-4 border-dashed w-full p-10 group text-center">
+                                        <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
+                                            <div class="flex flex-auto mx-auto pt-5">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-gray-200 w-36 h-36 object-center" viewBox="0 0 16 16">
+                                                  <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                                  <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5V14zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4z"/>
+                                                </svg>
+                                            </div>
+                                            <p class="pointer-none text-gray-500 mt-8">
+                                                <span class="text-md">Arrastra tu imagen</span>
+                                                <br />
+                                                o <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">haz clic aquí</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="my-5">
+                <img src="{% static 'img/logo_etsii_us.png' %}" class="h-14 mx-auto">
+                <p class="text-center text-sm text-gray-500 mt-3">por Bruno González Llaga</p>
+            </footer>
+        </section>
+        <div id="loadingDiv" class="fixed z-10 inset-0 overflow-y-auto">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom text-center overflow-hidden sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="m-auto w-fit">
+                       <svg role="status" class="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        $("#sign_button").click(function() {
+            $("#btn_select_init").addClass('hidden');
+            $("#form_sign_init").removeClass('hidden');
+        });
+        $("#get_path_button").click(function() {
+            $("#btn_select_init").addClass('hidden');
+            $("#div_get_path").removeClass('hidden');
+        });
+        $("#send_sign_button").click(function() {
+            console.log("jjdfas");
+            var formData =  new FormData(document.getElementById("form-image"));
+            formData.append('name', document.getElementById('name_init').value);
+            formData.append('platform', document.getElementById('platform_init').value);
+            $.ajax({
+                type:'POST',
+                url: '{% url "add" %}',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success:function(data){
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'imagen.png';
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                },
+                error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+        $("#send_get_path_button").click(function() {
+            var formData =  new FormData(document.getElementById("form-image"));
+            formData.append('original-image', document.getElementById('original_file').files[0]);
+            console.log("entra");
+            $.ajax({
+                type:'POST',
+                url: '{% url "get_path" %}',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success:function(data){
+                    $("#form_original_file").addClass('hidden');
+                    $("#send_get_path_button").addClass('hidden');
+                    $("#init_information").addClass('hidden');
+                    $("#table_path").removeClass('hidden');
+                    var body = document.getElementById('body_path');
+                    for (let i in data) {
+                        body.innerHTML += '<tr>'+
+                                                '<td>'+
+                                                    '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+i+'</span>'+
+                                                '</td>'+
+                                                '<td>'+
+                                                    '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+data[i]['Author']+'</span>'+
+                                                '</td>'+
+                                                '<td>'+
+                                                    '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+data[i]['Platform']+'</span>'+
+                                                '</td>'+
+                                                '<td>'+
+                                                    '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+data[i]['Time']+'</span>'+
+                                                '</td>'+
+                                            '</tr>';
+                    }
+                },
+                error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+        $(document).on('submit', '#init-add-form',function(e){
+            e.preventDefault();
+            var formData =  new FormData(document.getElementById("form-image"));
+            formData.append('redundancy', document.getElementById('redundancy').value);
+            formData.append('hash', document.getElementById('hash').value);
+            formData.append('name', document.getElementById('name').value);
+            formData.append('platform', document.getElementById('platform').value);
+            console.log("entraaa");
+            $.ajax({
+                type:'POST',
+                url: '{% url "init_add" %}',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success:function(data){
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'imagen.png';
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                },
+                error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+        </script>
+        <script>
+            window.onresize = dragAndDropFile;
+            $(function() {
+                dragAndDropFile();
+            });
+            function dragAndDropFile() {
+                var width_input = (document.getElementById('input_file').offsetWidth)+"px";
+                var height_input = (document.getElementById('input_file').offsetHeight)+"px";
+                $("#image_input").css("width", width_input);
+                $("#image_input").css("height", height_input);
+            }
+            $( "#form-image" ).change(function() {
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{% url 'check_initialized' %}",
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if(response['Initialized']){
+                            $("#input_file").addClass("hidden");
+                            $("#file_initialized").removeClass("hidden");
+                            document.getElementById('actual_image_init').src = URL.createObjectURL(formData.get('image'));
+                            document.getElementById('file_initialized_version').innerHTML = response['Version'];
+                            document.getElementById('file_initialized_line').innerHTML = response['Line'];
+                            document.getElementById('file_initialized_redundancy').innerHTML = response['Redundancy'];
+                            document.getElementById('file_initialized_hash').innerHTML = response['Hash'];
+                        } else {
+                            document.getElementById('actual_image_not_init').src = URL.createObjectURL(formData.get('image'));
+                            $("#input_file").addClass("hidden");
+                            $("#file_not_initialized").removeClass("hidden");
+                        }
+                    },
+                    error : function(xhr,errmsg,err) {
+                        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                    }
+                });
+            });
+            var $loading = $('#loadingDiv').hide();
+            $(document)
+                .ajaxStart(function () {
+                    $loading.show();
+                })
+                .ajaxStop(function () {
+                    $loading.hide();
+                });
+        </script>
+    </body>
+</html>

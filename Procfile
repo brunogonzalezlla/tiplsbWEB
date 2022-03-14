@@ -1,0 +1,1 @@
+web: gunicorn TIPLSBweb.wsgi --log-file -
