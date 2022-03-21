@@ -382,7 +382,6 @@
             $("#div_get_path").removeClass('hidden');
         });
         $("#send_sign_button").click(function() {
-            console.log("jjdfas");
             var formData =  new FormData(document.getElementById("form-image"));
             formData.append('name', document.getElementById('name_init').value);
             formData.append('platform', document.getElementById('platform_init').value);
@@ -429,7 +428,7 @@
                     for (let i in data) {
                         body.innerHTML += '<tr>'+
                                                 '<td>'+
-                                                    '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+i+'</span>'+
+                                                    '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+data[i]['Position']+'</span>'+
                                                 '</td>'+
                                                 '<td>'+
                                                     '<span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">'+data[i]['Author']+'</span>'+

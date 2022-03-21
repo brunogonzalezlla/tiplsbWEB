@@ -55,8 +55,8 @@ def get_path(request):
     print(path)
     d = {}
 
-    for e, i in zip(path, range(0, len(path))):
-        e_split = e.split("|")
-        d[i] = {"Author": e_split[1], "Platform": e_split[2], "Time": e_split[3]}
+    for i in path.keys():
+        e_split = path[i].split("|")
+        d[i] = {"Position": i, "Author": e_split[1], "Platform": e_split[2], "Time": e_split[3]}
 
     return JsonResponse(d)
